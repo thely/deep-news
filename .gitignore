@@ -1,0 +1,4 @@
+node_modules/
+client/client.js
+assets/*
+.DS_Store
