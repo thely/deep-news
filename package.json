@@ -1,0 +1,7 @@
+{
+  "name": "deep-web-master",
+  "workspaces": [
+    "dn-client",
+    "dn-server"
+  ]
+}
