@@ -3,15 +3,16 @@
 Folder structure:
 
 ```
-- assets (*)
-- server: the connecting server between computers
+- assets/ (*)
+- max/: the max patch
+- dn-server/: the connecting server between computers
   |- assets (link to *)
-- client: what the user interacts with
-  |- max: the max patch
-  |- web: the web page
-    |- src: JS files for editing
-    |- dist: bundled JS files, for website loading
-      |- assets (link to *)
+- dn-client/: what the user interacts with
+  |- src/: JS files for editing
+  |- dist/: bundled JS files, for website loading
+    |- assets (link to *)
+- node_modules/: most/all of the dependencies for dn-server and dn-client go here
+
 ```
 
 `/assets` has/will have all the static video files in it. `/client/web/assets/` and `/server/assets` are just links to that folder, so we don't need the same video files in all three places. (The Max patch is set up to reach up 2 folders to access the `/assets` folder.)
