@@ -1,4 +1,5 @@
 node_modules/
-client/client.js
+dist/bundle.js
 assets/*
 .DS_Store
+assets-full/*
