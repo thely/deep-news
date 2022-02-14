@@ -7,11 +7,11 @@ import VideoSwitcher from "./VideoSwitcher.js";
 
 xebraState.connect();
 const hydra = new HydraHandle();
-const videoSwitch = new VideoSwitcher([hydra]);
+const videoSwitch = new VideoSwitcher([hydra, xebraState]);
+
 videoSwitch.init().then(() => {
   hydra.run();
 });
-
 
 
 var btn = document.querySelector(".hydra-reset");

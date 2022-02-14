@@ -66,7 +66,7 @@ class VideoSwitcher {
       for (let o of p.observers) {
         o.videoNotify({
           index: p.index,
-          filename: p.players.src,
+          filename: p.players[c].src,
           player: p.players[c]
         });
       }

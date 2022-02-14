@@ -13,13 +13,21 @@ var options = {
 
 var xebraState = new Xebra.State(options);
 
+xebraState.videoNotify = function(data) {
+  console.log("notify max");
+  xebraState.sendMessageToChannel("fromBrowser", data);
+}
 
+
+// --------------- If we want communication from Max to browser
 // xebraState.on("channel_message_received", function(chan, msg) {
 //   if (chan === "toBrowser") {
 //     document.getElementById("fromMax").innerHTML = msg;
 //   }
 // });
 
+
+// --------------- Example for translating in-patch buttons to the browser
 
 // Do something when a button gets added to the Max patcher
 xebraState.on("object_added", function(object) {
