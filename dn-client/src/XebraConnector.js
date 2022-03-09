@@ -3,20 +3,55 @@
 
 const Xebra = require("xebra.js");
 
-var options = {
-  hostname : "127.0.0.1", // localhost
-  port : 8086,
-  supported_objects : [
-    "button"
-  ]
-};
+class MaxConnector {
+  constructor() {
+    this.options = {
+      hostname : "127.0.0.1", // localhost
+      port : 8086,
+      supported_objects : [
+        "button"
+      ]
+    };
 
-var xebraState = new Xebra.State(options);
+    this.state = {};
+  }
 
-xebraState.videoNotify = function(data) {
-  console.log("notify max");
-  xebraState.sendMessageToChannel("fromBrowser", data);
+  init() {
+    this.state = new Xebra.State(options);
+
+    // Do something when a button gets added to the Max patcher
+    xebraState.on("object_added", function(object) {
+      if (object.type === "button") addHTMLButton(object);
+    });
+
+    // Do something when a button is removed
+    xebraState.on("object_removed", function(object) {
+      if (object.type === "button") removeHTMLButton(object);
+    });
+
+    xebraState.on("object_changed", function(object, param) {
+      if (object.type === "button") {
+        if (param.type === "bgcolor") {
+          var button = document.getElementById("button-" + object.id);
+          button.style.backgroundColor = colorToHex(param.value);
+        }
+      }
+    });
+  }
+
+  videoNotify(data) {
+    console.log("notify max");
+    xebraState.sendMessageToChannel("fromBrowser", data);
+  }
 }
+
+
+// var xebraState = new Xebra.State(options);
+
+// xebraState.videoNotify = function(data) {
+//   console.log("notify max");
+//   xebraState.sendMessageToChannel("fromBrowser", data);
+// }
 
 
 // --------------- If we want communication from Max to browser
@@ -30,23 +65,23 @@ xebraState.videoNotify = function(data) {
 // --------------- Example for translating in-patch buttons to the browser
 
 // Do something when a button gets added to the Max patcher
-xebraState.on("object_added", function(object) {
-  if (object.type === "button") addHTMLButton(object);
-});
+// xebraState.on("object_added", function(object) {
+//   if (object.type === "button") addHTMLButton(object);
+// });
 
-// Do something when a button is removed
-xebraState.on("object_removed", function(object) {
-  if (object.type === "button") removeHTMLButton(object);
-});
+// // Do something when a button is removed
+// xebraState.on("object_removed", function(object) {
+//   if (object.type === "button") removeHTMLButton(object);
+// });
 
-xebraState.on("object_changed", function(object, param) {
-  if (object.type === "button") {
-    if (param.type === "bgcolor") {
-      var button = document.getElementById("button-" + object.id);
-      button.style.backgroundColor = colorToHex(param.value);
-    }
-  }
-});
+// xebraState.on("object_changed", function(object, param) {
+//   if (object.type === "button") {
+//     if (param.type === "bgcolor") {
+//       var button = document.getElementById("button-" + object.id);
+//       button.style.backgroundColor = colorToHex(param.value);
+//     }
+//   }
+// });
 
 function addHTMLButton(object) {
   var newButton = document.createElement("button");
@@ -75,4 +110,4 @@ function colorToHex(colorArray) {
   );
 }
 
-export default xebraState;
+export default MaxConnector;
