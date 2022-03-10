@@ -4,7 +4,17 @@ let hydra;
 
 class HydraHandle {
   constructor() {
-    hydra = new Hydra({ detectAudio: false });
+    this.canvas = document.querySelector("canvas");
+    hydra = new Hydra({ 
+      detectAudio: false, 
+      width: 1280,
+      height: 720,
+      canvas: this.canvas
+    });
+
+    // resize(this.canvas.width, this.canvas.height);
+    
+    setResolution(window.innerWidth, window.innerHeight);
   }
 
   // Central function for the Hydra synth.
