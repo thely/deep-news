@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:js": "browserify src/main.js --debug --verbose -t [ babelify --presets [@babel/preset-env] ] -o dist/bundle.js",
-    "watch:js": "nodemon --watch 'src' --exec 'npm run build:js'",
-    "dev": "npm run watch:js & nodemon server.js"
+    "build:js": "browserify src/js/main.js --debug --verbose -t [ babelify --presets [@babel/preset-env] ] -o dist/bundle.js",
+    "watch:js": "nodemon --watch 'src/js' --exec 'npm run build:js'",
+    "build:css": "node-sass src/sass/style.scss dist/style.css --output-style compressed",
+    "watch:css": "node-sass --watch src/sass/style.scss dist/style.css --output-style compressed",
+    "dev": "npm run watch:js & npm run watch:css & nodemon server.js"
   },
   "author": "",
   "license": "ISC",

@@ -2,44 +2,7 @@
 <html>
   <head>
     <title>deep news tests</title>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-      #hydra-time {
-        /* width: 1280px; */
-        /* height: 720px; */
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-      }
-
-      .chat-block {
-        width: 30vw;
-        height: 100vh;
-        max-height: 100vh;
-
-        background-color: rgba(255, 255, 255, 0.75);
-        padding: 1em;
-
-        display: grid;
-        grid-template-rows: 1fr 1.5em;
-      }
-
-      .chat-messages {
-
-      }
-
-      .chat-writing {
-        /* position: absolute;
-        bottom: 0; */
-      }
-
-      .controls {
-        float: right;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div id="container">
@@ -65,7 +28,8 @@
         </div>
       </div>
 
-      <canvas id="hydra-time"></canvas>
+      <canvas id="hydra-large"></canvas>
+      <canvas id="hydra-small"></canvas>
     </div>
     
     
