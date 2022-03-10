@@ -1,13 +1,41 @@
 import HydraHandle from "./HydraPatch.js";
-import xebraState from "./XebraConnector.js";
+import MaxConnector from "./XebraConnector.js";
 import VideoSwitcher from "./VideoSwitcher.js";
 
-// const io = require('socket.io-client');
-// var socket = io("http://localhost:9000");
+try {
+  const io = require('socket.io-client');
+  var socket = io("http://localhost:8000");
 
-xebraState.connect();
+  const input = document.querySelector("input.chat-input");
+  const form = document.querySelector("form.chat-form");
+  const messages = document.querySelector(".chat-messages ul");
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (input.value) {
+      socket.emit('message', input.value);
+      input.value = '';
+    }
+  });
+
+  socket.on('message', msg => {
+    var item = document.createElement("li");
+    item.textContent = msg;
+    messages.appendChild(item);
+  })
+} catch (e) {
+  console.log("no socket client to speak of today");
+}
+
+
+let maxConn, videoSwitch;
 const hydra = new HydraHandle();
-const videoSwitch = new VideoSwitcher([hydra, xebraState]);
+try {
+  maxConn = new MaxConnector();
+  videoSwitch = new VideoSwitcher([hydra, xebraState]);
+} catch (e) {
+  videoSwitch = new VideoSwitcher([hydra]);
+}
 
 videoSwitch.init().then(() => {
   hydra.run();
@@ -21,17 +49,17 @@ btn.addEventListener("click", (e) => {
 });
 
 
-function sendToMax(val) {
-  xebraState.sendMessageToChannel("fromBrowser", val);
-}
+// function sendToMax(val) {
+//   xebraState.sendMessageToChannel("fromBrowser", val);
+// }
 
 var muteState = 0;
 var btn2 = document.querySelector(".max-ping");
 
-btn2.addEventListener("click", (e) => {
-  sendToMax(muteState);
-  muteState = muteState ? 0 : 1;
-});
+// btn2.addEventListener("click", (e) => {
+//   sendToMax(muteState);
+//   muteState = muteState ? 0 : 1;
+// });
 
 var slide = document.querySelector("#frequency");
 slide.addEventListener("input", (e) => {

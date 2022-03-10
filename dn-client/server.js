@@ -6,13 +6,31 @@ const path = require('path');
 const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(http);
 
 app.use(express.static('dist'));
 
 app.get('/', (req, res) => {
   res.sendFile('index.html')
-})
+});
 
+// -----------------
+// Socket connection
+// -----------------
+io.on('connection', socket => {
+  console.log("a user connected");
+
+  socket.on('message', msg => {
+    io.emit('message', msg);
+  })
+});
+
+
+
+// -----------------
+// Complete video list
+// -----------------
 app.get('/videos', (req, res) => {
   fs.readdir(path.resolve(__dirname, "../assets"), (err, files) => {
     if (err) {
@@ -30,6 +48,9 @@ app.get('/videos', (req, res) => {
   });
 });
 
+// -----------------
+// Actually server
+// -----------------
 http.listen(8000, () => {
   console.log('client on *:' + 8000);
 });
