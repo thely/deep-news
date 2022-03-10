@@ -1,0 +1,44 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#hydra-large {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.chat-block {
+  margin: 1em;
+  width: 30vw;
+  height: calc(100vh - 2em);
+  max-height: 100vh;
+
+  background-color: rgba(255, 255, 255, 0.75);
+  padding: 1em;
+
+  display: grid;
+  grid-template-rows: 1fr 1.5em;
+}
+
+.chat-messages {
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+}
+
+.chat-form {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-column-gap: 1em;
+}
+
+.controls {
+  float: right;
+}

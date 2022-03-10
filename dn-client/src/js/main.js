@@ -2,6 +2,9 @@ import HydraHandle from "./HydraPatch.js";
 import MaxConnector from "./XebraConnector.js";
 import VideoSwitcher from "./VideoSwitcher.js";
 
+//-------------------------------
+// socket.io chat
+//-------------------------------
 try {
   const io = require('socket.io-client');
   var socket = io("http://localhost:8000");
@@ -28,18 +31,33 @@ try {
 }
 
 
-let maxConn, videoSwitch;
-const hydra = new HydraHandle();
+//-------------------------------
+// starting patches, checking if Max or no
+//-------------------------------
+let maxConn, videoSwitch1, videoSwitch2;
+const hydra1 = new HydraHandle("#hydra-large");
+// const hydra2 = new HydraHandle("#hydra-small", 400, 300);
+// console.log(hydra1);
+// console.log(hydra2);
+// console.log(hydra1);
+
 try {
   maxConn = new MaxConnector();
-  videoSwitch = new VideoSwitcher([hydra, xebraState]);
+  videoSwitch1 = new VideoSwitcher([hydra1, hydra2, xebraState]);
 } catch (e) {
-  videoSwitch = new VideoSwitcher([hydra]);
+  videoSwitch1 = new VideoSwitcher([hydra1]);
+  videoSwitch2 = new VideoSwitcher([hydra2]);
 }
 
-videoSwitch.init().then(() => {
-  hydra.run();
-});
+// videoSwitch1.init().then(() => {
+//   console.log("first switch ready");
+//   hydra1.run();
+// });
+
+// videoSwitch2.init().then(() => {
+//   console.log("second switch ready");
+//   hydra2.run4();
+// });
 
 
 var btn = document.querySelector(".hydra-reset");
@@ -63,7 +81,7 @@ var btn2 = document.querySelector(".max-ping");
 
 var slide = document.querySelector("#frequency");
 slide.addEventListener("input", (e) => {
-  hydra.run(parseInt(e.target.value));
+  hydra1.run(parseInt(e.target.value));
 });
 
 
