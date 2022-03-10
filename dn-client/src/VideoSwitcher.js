@@ -47,6 +47,7 @@ class VideoSwitcher {
 
     this.players[0].src = this.currentFile();
     this.players[0].autoplay = true;
+    this.players[0].play();
   }
 
   videoElement(c) {
